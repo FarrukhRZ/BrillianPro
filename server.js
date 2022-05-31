@@ -13,6 +13,7 @@ const db = require('./keys').MongoURI;
 const users = require('./routes/api/users');
 const courses = require('./routes/api/courses');
 const materials = require('./routes/api/materials');
+const assessment = require('./routes/api/assessment');
 //Mongodb Connect
 mongoose
     .connect(db)
@@ -23,6 +24,7 @@ mongoose
 app.use('/api/users',users)
 app.use('/api/courses',courses)
 app.use('/api/materials',materials)
+app.use('/api/assessment',assessment)
 
 app.get('/',(req,res) =>{
     res.send('Hello');
