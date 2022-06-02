@@ -3,14 +3,37 @@ const Schema = mongoose.Schema;
 const assessmemtSchema = new Schema({
     id : {type : Number,
         required: true},
-    type : {type: String,
-        required: true},
-    number : {type : Number,
-        required : true},
-    weightage : {type : Number,
-        required : true},
-    maxMarks : {type: Number,
-        required: true},
-    obtainedMarks : {type: Number,
-        default: 0}
+    name : {
+        type: String,
+        required: true
+    },
+    questions :[{
+        option1 : {
+            type: String,
+            required: true
+        },
+        option2 : {
+            type: String,
+            required: true
+        },
+        option3 : {
+            type: String,
+            required: true
+        },
+        option4 : {
+            type: String,
+            required: true
+        },
+        answer : {
+            type: Number,
+            required: true
+        },
+    }],
+    timeLimitInMinutes :{
+        type: Number,
+        required: true
+    },
+    totalMarks : {type: Number,
+        required: true}
 })
+module.exports = mongoose.model('assessments',assessmemtSchema);

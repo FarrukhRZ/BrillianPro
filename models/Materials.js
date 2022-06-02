@@ -6,3 +6,5 @@ const materialSchema = new Schema({
     link : {type : String,
             required: true}
 })
+
+module.exports = mongoose.model('materials',materialSchema);

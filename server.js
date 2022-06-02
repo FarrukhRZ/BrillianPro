@@ -2,24 +2,36 @@ const { compareSync } = require('bcryptjs');
 const express = require('express');
 const mongoose = require('mongoose');
 const keys = require('./keys');
-
+const users = require('./routes/api/users');
+const courses = require('./routes/api/courses');
+const materials = require('./routes/api/materials');
+const assessment = require('./routes/api/assessment');
+const bodyparser = require('body-parser');
+const passport = require('passport')
 
 const app = express();
 
 //mongoDB config
 const db = require('./keys').MongoURI;
 
-//routes
-const users = require('./routes/api/users');
-const courses = require('./routes/api/courses');
-const materials = require('./routes/api/materials');
-const assessment = require('./routes/api/assessment');
+
+//body-parser middleware
+app.use(bodyparser.urlencoded({extended: false}));
+app.use(bodyparser.json());
+
+//passport middleware
+app.use(passport.initialize());
+
+//passport Config
+require('./passport')(passport);
+
 //Mongodb Connect
 mongoose
     .connect(db)
     .then(()=> console.log("MongoDB connected"))
     .catch((err) => console.log("Error" + err))
 
+//routes
 
 app.use('/api/users',users)
 app.use('/api/courses',courses)
