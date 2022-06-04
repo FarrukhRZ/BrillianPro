@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
 const enrolledCoursesSchema = new Schema ({
+    enrollmentID: {
+        type: String,
+        required: true},
     learnerID : {
         type: Schema.Types.ObjectId,
         ref: 'users'
@@ -24,31 +27,20 @@ const enrolledCoursesSchema = new Schema ({
                 type : Number,
                 required : true
             },
-            averageMarks : {
-                type: Number,
-                default: 0
-            },
-            maxMarks : {
-                type: Number,
-                default: 0
-            },
-            minMarks : {
-                type: Number,
-                default: 0
-            },
-            isCompleted :{
-                type : Boolean,
-                default: false
-            },
-            progress : {
-                type : Number,
-                default: 0
-            }
+            
         }
     ],
     materials : [
         {type: Schema.Types.ObjectId,
         ref: 'materials'}
-    ]
+    ],
+    isCompleted :{
+        type : Boolean,
+        default: false
+    },
+    progress : {
+        type : Number,
+        default: 0
+    }
 })
 module.exports = mongoose.model('enrolledCourses',enrolledCoursesSchema);
