@@ -12,9 +12,9 @@ router.get('/test',(req,res) =>{
 });
 router.get('/getMaterial', passport.authenticate('jwt',{session: false}), (req,res)=>{
     if(req.user.username != 'Admin') return res.status(401).json({user: "Unauthorized User"})
-    Material.find({}).then((err,materials) =>{
+    Material.find({}).then((materials) =>{
         console.log(materials)
-        res.status(200).json({materials})
+        res.status(200).json(materials)
     })
 });
 router.post('/addMaterial', passport.authenticate('jwt',{session: false}), (req,res)  =>{

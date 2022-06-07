@@ -9,8 +9,24 @@ const passport= require('passport');
 router.get('/test',(req,res) =>{
     res.json({msg: "Assessment Works"})
 });
+router.get('/getAssessment', passport.authenticate('jwt',{session: false}), (req,res) =>{
+    if(req.user.username != 'Admin') return res.status(401).json({user: "Unauthorized User"});
+    Assessment.find({}).then(assessments =>{
+        return res.status(200).json(assessments)
+    })
+    .catch(err => {return res.status(400).json(err)})
+})
+router.post('/removeAssessment', passport.authenticate('jwt',{session: false}), (req,res) =>{
+    if(req.user.username != 'Admin') return res.status(401).json({user: "Unauthorized User"});
+    Assessment.deleteOne({id: req.body.id}).then(assessments =>{
+        return res.status(200).json(assessments)
+    })
+    .catch(err => {return res.status(400).json(err)})
+})
 router.post('/addAssessment', passport.authenticate('jwt',{session: false}), (req,res) =>{
     if(req.user.username != 'Admin') return res.status(401).json({user: "Unauthorized User"});
+    console.log(req.body);
+    req.body.questions = JSON.parse(req.body.questions)
     console.log(req.body);
     Assessment.findOne({id: req.body.id})
     .then(assessmemt =>{
@@ -26,6 +42,8 @@ router.post('/addAssessment', passport.authenticate('jwt',{session: false}), (re
 })
 router.post('/addQuestions', passport.authenticate('jwt',{session: false}), (req,res) =>{
     if(req.user.username != 'Admin') return res.status(401).json({user: "Unauthorized User"});
+    console.log(req.body);
+    req.body.questions = JSON.parse(req.body.questions)
     console.log(req.body);
     Assessment.findOne({id: req.body.id})
     .then(assessmemt =>{

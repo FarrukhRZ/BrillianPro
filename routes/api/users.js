@@ -11,6 +11,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../keys');
 const passport = require('passport');
+const Users = require('../../models/Users');
 //@route api/users/test
 //@desc test user route
 //@access Public
@@ -31,6 +32,7 @@ router.post('/register',(req,res) => {
     .then(user =>{
         if (user){
             errors.email = 'Email already exists';
+            console.log(errors)
             return res.status(400).json(errors);
 
         }
@@ -64,7 +66,7 @@ router.post('/register',(req,res) => {
 // @desc Login User / return JWT Token
 // @access Public
 router.post('/login',(req,res) =>{
-
+    console.log(req.body)
     const username = req.body.username;
     const password = req.body.password;
     let { errors, isValid } = validateLoginInput(req.body);
@@ -124,6 +126,7 @@ router.get('/admin/index',passport.authenticate('jwt',{session: false}),(req,res
     });
 });
 router.get('/admin/dashboard',passport.authenticate('jwt',{session: false}),(req,res) =>{
+    console.log(req.header)
     if(req.user.username != 'Admin') return res.status(401).json({user: "Unauthorized User"})
     User.count({},(err,totalLearners) =>{
         totalLearners -= 1
@@ -143,5 +146,10 @@ router.get('/admin/dashboard',passport.authenticate('jwt',{session: false}),(req
     })
     
 
+})
+router.get('/getName',passport.authenticate('jwt',{session: false}),(req,res)=>{
+    Users.findOne({_id: req.body.id}).then(user =>{
+        return res.status(200).json(user.name)
+    })
 })
 module.exports = router;

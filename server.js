@@ -8,6 +8,7 @@ const materials = require('./routes/api/materials');
 const assessment = require('./routes/api/assessment');
 const bodyparser = require('body-parser');
 const passport = require('passport')
+const cors = require('cors');
 
 const app = express();
 
@@ -16,8 +17,11 @@ const db = require('./keys').MongoURI;
 
 
 //body-parser middleware
-app.use(bodyparser.urlencoded({extended: false}));
+app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
+
+//cors middleware
+app.use(cors());
 
 //passport middleware
 app.use(passport.initialize());
@@ -36,7 +40,7 @@ mongoose
 app.use('/api/users',users)
 app.use('/api/courses',courses)
 app.use('/api/materials',materials)
-app.use('/api/assessment',assessment)
+app.use('/api/assessments',assessment)
 
 app.get('/',(req,res) =>{
     res.send('Hello');
