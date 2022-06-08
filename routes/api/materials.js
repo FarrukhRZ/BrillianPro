@@ -18,6 +18,7 @@ router.get('/getMaterial', passport.authenticate('jwt',{session: false}), (req,r
     })
 });
 router.post('/addMaterial', passport.authenticate('jwt',{session: false}), (req,res)  =>{
+    console.log('added material')
     if(req.user.username != 'Admin') return res.status(401).json({user: "Unauthorized User"})
     let {errors, isValid} = validateMaterialInput(req.body)
     if (!isValid) {

@@ -63,7 +63,7 @@
 <!-- CRUD Ops -->
 <div class="container">
     <div style="margin-bottom: 30px;">
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" (click)="toggleform()">
             Add Material
           </button>
     </div>
@@ -77,6 +77,20 @@
             Remove Material
           </button>
     </div>
+    <div *ngIf="displayform" class="form" id="form">
+      <form method="post" class="form1">
+        <h2>Add Material</h2>
+        <label class="b">Material Name</label><br>
+        <input type="text" name="matname" placeholder="material name" id="matname" class="textbox" [(ngModel)]="matname" required><br>
+        <label class="b">Type of Material</label><br>
+        <input type="text" name="mtype" placeholder="Material Type" id="mtype" class="textbox" [(ngModel)]="mtype" required><br>
+        <label class="b">Link</label><br>
+        <input type="text" name="link" placeholder="Link" id="link" class="textbox" [(ngModel)]="link" required><br>
+        
+        <button class="btn" id="submitbtn" name="Submit" type="reset" (click)="addmaterial()">Submit</button>
+        <button type="button" class="cancel" (click)="toggleform()">Close</button>
+      </form>
+      </div>
 </div>
 </body>
 </html>

@@ -11,6 +11,33 @@ export class MaterialComponent implements OnInit {
   constructor(private http: HttpClient) { }
   materials: Array<material> = []
   token: string = history.state.name
+  matname :string=''
+  mtype :string=''
+  link: string=''
+
+  displayform=false
+  toggleform(){
+    this.displayform=!this.displayform;
+  }
+
+  addmaterial(){
+    console.log(this.matname)
+    console.log(this.mtype)
+    console.log(this.link)
+    let options = {
+      headers: new HttpHeaders().set('Authorization', this.token)
+                    .set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+    let body = new URLSearchParams()
+    // this.displayform=!this.displayform;
+    body.set("name",this.matname);
+    body.set("type",this.mtype);
+    body.set("link",this.link);
+    this.http.post('http://localhost:5000/api/materials/addMaterial',body.toString(),options).subscribe(response =>{
+      console.log(response)
+    })
+  }
+
   ngOnInit(): void {
     let options = {
       headers: new HttpHeaders().set('Authorization', this.token)
