@@ -23,6 +23,7 @@ export class CourseEnrollmentComponent implements OnInit {
     };
     this.http.get<Array<CourseEnroll>>('http://localhost:5000/api/courses/getEnrollment',options).subscribe(response =>{
       this.enrollmentArray=response;
+      console.log(response)
     })
   }
   removeEnrollment(eID: string){

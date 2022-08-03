@@ -34,13 +34,12 @@ mongoose
     .connect(db)
     .then(()=> console.log("MongoDB connected"))
     .catch((err) => console.log("Error" + err))
-
 //routes
-
 app.use('/api/users',users)
 app.use('/api/courses',courses)
 app.use('/api/materials',materials)
 app.use('/api/assessments',assessment)
+//localhost:5000/api/courses/test
 
 app.get('/',(req,res) =>{
     res.send('Hello');
@@ -48,4 +47,6 @@ app.get('/',(req,res) =>{
 
 const port = process.env.PORT || 5000;
 
+
 app.listen(port, () => console.log(`Server running on port ${port}`));
+

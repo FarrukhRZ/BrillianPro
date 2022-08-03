@@ -63,8 +63,8 @@ img {
     .form{
       display: block;
       position: relative;
-      max-width: 500px;
-      left: 250px;
+      width: 50%;
+      left: 25%;
       border: 2px solid rgb(20, 98, 216);
       z-index: 9;
     }

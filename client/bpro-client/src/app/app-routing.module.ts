@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ResolvedReflectiveFactory } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { resolve } from 'dns';
 import { homedir } from 'os';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AppComponent } from './app.component';

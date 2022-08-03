@@ -11,13 +11,5 @@ export class AppComponent {
   constructor(private router: Router){
     router.navigate(['/home'])
   }
-  navigate(opt: string){
-    if(opt == '1'){
-      this.router.navigate(['/register']);
-    }
-    else{
-      this.router.navigate(['/login']);
-      console.log('login')
-    }
-  }
+
 }

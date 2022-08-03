@@ -134,8 +134,33 @@ router.post("/attachAssessment",  passport.authenticate('jwt',{session: false}),
 router.get('/getEnrollment', passport.authenticate('jwt',{session: false}),(req,res) =>{
     if(req.user.username != 'Admin') return res.status(401).json({user: "Unauthorized User"})
     EnrolledCourses.find({}).then(courses =>{
-        console.log(courses)
-        res.status(200).json(courses)
+        Users.find({}).then(users =>{
+            Courses.find({}).then( courseList =>{
+                // console.log(users)
+                for(var i=0;i< courses.length;i++){
+                    for(var j=0; j<users.length;j++){
+                        // console.log(users[j]['_doc']['_id'] + "    " + courses[i].learnerID)
+                        if(users[j]['_doc']['_id'].equals(courses[i].learnerID)){
+                            console.log(users[j]['_doc']['_id'] + "    " + courses[i].learnerID)
+                            courses[i]['_doc'].learnerID = users[j]['_doc']['name'] 
+                        }
+                    }
+                }
+                for(var i=0;i< courses.length;i++){
+                    for(var j=0; j<courseList.length;j++){
+                        // console.log(users[j]['_doc']['_id'] + "    " + courses[i].courseID)
+                        if(courseList[j]['_doc']['_id'].equals(courses[i].courseID)){
+                            console.log(users[j]['_doc']['_id'] + "    " + courses[i].courseID)
+                            courses[i]['_doc']['courseID'] = courseList[j]['_doc']['name']
+                            // console.log(courses[i].courseID)
+                            console.log(courseList[j]['_doc']['name'])
+                        }
+                    }
+                }
+                // console.log(courses)
+                res.status(200).json(courses)
+            })
+        })
         
     }).catch(err =>{
         res.status(400).json(err)
@@ -147,4 +172,6 @@ router.get('/getName',passport.authenticate('jwt',{session: false}),(req,res)=>{
         return res.status(200).json(course.id)
     })
 })
+
+
 module.exports = router;

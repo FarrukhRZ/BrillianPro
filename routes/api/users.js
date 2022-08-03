@@ -18,6 +18,9 @@ const Users = require('../../models/Users');
 router.get('/test',(req,res) =>{
     res.json({msg: "User Works"});
 });
+router.delete('/test',(req,res)=>{
+    res.json({msg: "delete route works"})
+})
 router.post('/register',(req,res) => {
     console.log(req.body);
     let { errors, isValid } = validateRegisterInput(req.body);
@@ -108,7 +111,12 @@ router.post('/login',(req,res) =>{
                     }
                 });
             }
-        });
+            
+            console.log("check then")
+        }).catch( err =>{
+            console.log("check err")
+        })
+        console.log("check main")
 });
 router.get('/learner/index',passport.authenticate('jwt',{session: false}),(req,res) =>{
     return res.json({

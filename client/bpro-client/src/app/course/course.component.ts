@@ -54,6 +54,12 @@ export class CourseComponent implements OnInit {
       console.log(response)
     })
     this.displayform=!this.displayform;
+    setTimeout(()=>{
+      this.router.navigateByUrl('/', { skipLocationChange: true , state: { id:1 , name:this.token } }  ).then(() => {
+        this.router.navigate(['/courses'], { state: { id:1 , name:this.token } })});
+    },500)
+    
+    
   }
   removeCourse(courseID: string){
     console.log(courseID)
@@ -66,6 +72,9 @@ export class CourseComponent implements OnInit {
     this.http.post('http://localhost:5000/api/courses/removeCourse',body.toString(),options).subscribe(response =>{
       console.log(response)
     })
+    this.router.navigateByUrl('/', { skipLocationChange: true , state: { id:1 , name:this.token } }  ).then(() => {
+      this.router.navigate(['/courses'], { state: { id:1 , name:this.token } });
+  });
   }
 
 }
